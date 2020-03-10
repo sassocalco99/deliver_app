@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:deliverapp/style/style.dart';
+import '../style/style.dart';
 import 'package:flutter/widgets.dart';
+import '../items/item.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -34,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               child: FittedBox(
                 fit: BoxFit.contain,
-                child: Text("Hello", style: itemStyle),
+                child: Text("Hello", style: searchStyle),
               ),
             ),
           ),
@@ -45,24 +46,11 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Stack(
-                    children: <Widget>[
-                      MaterialButton(
-                        child: Text("Shopping"),
-                        onPressed: () {},
-                      )
-                    ],
+                  new ItemBox(
+                    name: "Shopping",
                   ),
-                  Stack(
-                    children: <Widget>[
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
-                          height: 100,
-                          width: 100,
-                        ),
-                      )
-                    ],
+                  new ItemBox(
+                    name: "Food",
                   ),
                 ],
               )
@@ -93,21 +81,11 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Stack(
-                    children: <Widget>[
-                      MaterialButton(
-                        child: Text("Bakery"),
-                        onPressed: () {},
-                      )
-                    ],
+                  new ItemBox(
+                    name: "Bakery",
                   ),
-                  Stack(
-                    children: <Widget>[
-                      MaterialButton(
-                        child: Text("Bakery"),
-                        onPressed: () {},
-                      )
-                    ],
+                  new ItemBox(
+                    name: "Pharmacy",
                   ),
                 ],
               )
