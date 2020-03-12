@@ -84,6 +84,7 @@ class _ItemBoxState extends State<ItemBox>{
     return AnimatedContainer(
       duration: _duration,
       curve: Curves.ease,
+      //todo fix animation
       transform: moving ? (Matrix4.identity()..translate(position.dx, position.dy)): Matrix4.identity(),
       decoration: BoxDecoration(
           shape: BoxShape.circle

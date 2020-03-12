@@ -3,8 +3,7 @@ import 'package:flutter/cupertino.dart';
 import '../style/style.dart';
 import 'package:flutter/widgets.dart';
 import '../items/item.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:location_permissions/location_permissions.dart';
+import '../pages/current_position.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -16,42 +15,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Position _currentPosition;
-
-  _getCurrentLocation() {
-    final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
-
-    geolocator
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-        .then((Position position) {
-      setState(() {
-        _currentPosition = position;
-      });
-    }).catchError((e) {
-      print(e);
-    });
-  }
-
-  Widget _locationTitle() {
-    if (_currentPosition != null) {
-      return Text(
-          "LAT: ${_currentPosition.latitude}, LNG: ${_currentPosition
-              .longitude}");
-    }else{
-      return FlatButton(
-      child: Text("Get location"),
-      onPressed: () {
-      _getCurrentLocation();
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: _locationTitle(),
+        title: CurrentPosition(),
       ),
       body: Column(
         children: <Widget>[
@@ -65,6 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               child: FittedBox(
                 fit: BoxFit.contain,
+                //todo add textfield
                 child: Text("Hello", style: searchStyle),
               ),
             ),
