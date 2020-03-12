@@ -1,4 +1,7 @@
-#Tue Mar 10 12:59:49 CET 2020
+#Thu Mar 12 14:31:37 CET 2020
 base.0=/Users/slotruglio/Documents/development/testing/deliver_app/deliver_app/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
+path.1=classes.dex
+renamed.1=classes2.dex
 path.0=classes.dex
 renamed.0=classes.dex
+base.1=/Users/slotruglio/Documents/development/testing/deliver_app/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex

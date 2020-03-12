@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import '../style/style.dart';
 import 'package:flutter/widgets.dart';
 import '../items/item.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:location_permissions/location_permissions.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -14,14 +16,42 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Position _currentPosition;
 
+  _getCurrentLocation() {
+    final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+
+    geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) {
+      setState(() {
+        _currentPosition = position;
+      });
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+  Widget _locationTitle() {
+    if (_currentPosition != null) {
+      return Text(
+          "LAT: ${_currentPosition.latitude}, LNG: ${_currentPosition
+              .longitude}");
+    }else{
+      return FlatButton(
+      child: Text("Get location"),
+      onPressed: () {
+      _getCurrentLocation();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(this.widget.title),
+        title: _locationTitle(),
       ),
       body: Column(
         children: <Widget>[
@@ -40,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           Container(
-            height: 100,
+            height: 60,
           ),
           Center(
               child: Row(
@@ -56,25 +86,8 @@ class _MyHomePageState extends State<MyHomePage> {
               )
           ),
           Center(
-            child: Container(
-
-              height: 150,
-              width: 150,
-              decoration: BoxDecoration(
-                  color: Colors.purple,
-                  shape: BoxShape.circle
-              ),
-              child: Center(
-                child: Text("Select what\nyou want",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25
-                  )
-                ),
-              ),
-
+            child: new ItemBox(
+              name: "Your Profile",
             )
           ),
           Center(
