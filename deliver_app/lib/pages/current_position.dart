@@ -56,7 +56,14 @@ class _PositionState extends State<CurrentPosition>{
         return Text(_currentAddress);
       }else{
         return FlatButton(
-            child: Text("Get location"),
+            child: Text("Get Location",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 30,
+                fontWeight: FontWeight.bold
+
+              ),
+            ),
             onPressed: () {
               _getCurrentLocation();
             });
