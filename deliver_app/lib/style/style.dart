@@ -11,3 +11,9 @@ TextStyle itemStyle = TextStyle(
     color: Colors.white,
     fontWeight: FontWeight.bold
 );
+
+TextStyle pageBoxStyle = TextStyle(
+    fontSize: 30,
+    color: Colors.black,
+    fontWeight: FontWeight.bold
+);

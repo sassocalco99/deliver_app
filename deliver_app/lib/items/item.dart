@@ -1,7 +1,9 @@
+import 'package:deliverapp/pages/tagPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../style/style.dart';
 import 'package:flutter/widgets.dart';
+import '../pages/tagPage.dart';
 
 class Item {
   String _name;
@@ -30,7 +32,7 @@ List<Item> itemList = [
   new Item("Food", 'images/food.png', Colors.blue[800]),
   new Item("Bakery", 'images/bakery.png', Colors.green[800]),
   new Item("Pharmacy", 'images/pharmacy.png', Colors.yellow[800]),
-  new Item("Your Profile", 'images/avatar.png', Colors.purple[800])
+  new Item("Your Profile", 'images/avatarg.png', Colors.purple[800])
 ];
 
 bool equalsIgnoreCase(String string1, String string2) {
@@ -95,6 +97,12 @@ class _ItemBoxState extends State<ItemBox>{
             print("tapped "+item.getName());
             print("first position: "+firstPosition.toString());
             print("last position: "+lastPosition.toString());
+            if(item.getName() != "Your Profile"){
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => TagPage(tag: item.getName()))
+              );
+            }
           },
           onLongPress: () {
             _getPosition();
@@ -111,44 +119,48 @@ class _ItemBoxState extends State<ItemBox>{
             position = firstPosition;
             moving = false;
           },
-          child: Stack(
-              children: <Widget>[
+          child: Hero(
+            tag: item.getName(),
+              child: Stack(
+                  children: <Widget>[
 
-                Container(
+                    Container(
 
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
-                      color: item.getColor(),
-                      shape: BoxShape.circle
-                  ),
-                  child: Container(
+                      height: 150,
+                      width: 150,
+                      decoration: BoxDecoration(
+                          color: item.getColor(),
+                          shape: BoxShape.circle
+                      ),
+                      child: Container(
 
-                    height: 50,
-                    width: 50,
-                    child: Image.asset(item.getPic(), height: 107, width: 135, cacheWidth: 135, cacheHeight: 107,),
-                  ),
-                ),
-                Container(
-
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.all(8),
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
-                      color: Colors.black12,
-                      shape: BoxShape.circle
-                  ),
-                  child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: Text(item.getName(),
-                      style: itemStyle,
-                      textAlign: TextAlign.center,
+                        height: 50,
+                        width: 50,
+                        child: Image.asset(item.getPic(), height: 107, width: 135, cacheWidth: 135, cacheHeight: 107,),
+                      ),
                     ),
-                  ),
-                )
-              ]
+                    Container(
+
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.all(8),
+                      height: 150,
+                      width: 150,
+                      decoration: BoxDecoration(
+                          color: Colors.black12,
+                          shape: BoxShape.circle
+                      ),
+                      child: FittedBox(
+                        fit: BoxFit.contain,
+                        child: Text(item.getName(),
+                          style: itemStyle,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    )
+                  ]
+              )
           )
+
       ),
     );
 
