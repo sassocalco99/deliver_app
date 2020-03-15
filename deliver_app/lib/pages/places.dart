@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import '../style/style.dart';
+import '../pages/card.dart';
 
 final String jsonLink = "https://next.json-generator.com/api/json/get/VkchDkUru?indent=4";
 
@@ -118,7 +119,7 @@ class PlacesList extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: Image.asset('images/$littleTag.png', fit: BoxFit.fitWidth),
-                  )
+                  ),
                 ],
               )
             ),
@@ -155,6 +156,16 @@ class PlacesList extends StatelessWidget {
                   ),
                 )
             ),
+            InkResponse(
+              onTap: () {
+                print("tapped");
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PlaceCard(place: placeToView[index])
+                    )
+                );
+              }
+            )
 
           ],
         ),

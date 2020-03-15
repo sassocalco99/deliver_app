@@ -16,7 +16,7 @@ class TagPage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Hero(
-      tag: '$tag',
+        tag: '$tag',
         child: Scaffold(
           backgroundColor: Colors.deepPurple[100],
           //todo textfield
