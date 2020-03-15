@@ -4,6 +4,11 @@ import 'package:geolocator/geolocator.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
 
+Position currentPosition;
+
+Position getPosition(){
+  return currentPosition;
+}
 
 class CurrentPosition extends StatefulWidget{
 
@@ -24,6 +29,7 @@ class _PositionState extends State<CurrentPosition>{
         .then((Position position) {
       setState(() {
         _currentPosition = position;
+        currentPosition = position;
       });
 
       _getAddressFromLatLng();

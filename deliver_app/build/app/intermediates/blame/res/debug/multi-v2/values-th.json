@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/slotruglio/Documents/development/testing/deliver_app/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-th/values-th.xml",
+            "outputFile": "/Users/slotruglio/Documents/development/testing/deliver_app/deliver_app/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-th/values-th.xml",
             "map": [
                 {
                     "source": "/Users/slotruglio/.gradle/caches/transforms-2/files-2.1/5ac9ad6f13ea0190a3570ea7a43d9f59/play-services-base-17.0.0/res/values-th/values.xml",
@@ -38,7 +38,7 @@
                     }
                 },
                 {
-                    "source": "/Users/slotruglio/.gradle/caches/transforms-2/files-2.1/503f5ca3de1c6b0ee54a36d4975e840b/jetified-play-services-basement-17.0.0/res/values-th/values.xml",
+                    "source": "/Users/slotruglio/.gradle/caches/transforms-2/files-2.1/18a4121a158603c2ef52825721b2e380/jetified-play-services-basement-17.0.0/res/values-th/values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",

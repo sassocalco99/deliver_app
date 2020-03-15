@@ -7,6 +7,8 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import '../style/style.dart';
 import '../pages/card.dart';
+import '../pages/current_position.dart';
+import 'package:http/http.dart' as http;
 
 final String jsonLink = "https://next.json-generator.com/api/json/get/VkchDkUru?indent=4";
 
@@ -20,7 +22,8 @@ class Place {
   final String about;
   var latitude;
   var longitude;
-  Position position;
+  String address;
+  var distance;
   final String tag;
 
   Place({this.id, this.index, this.rating, this.picture, this.company, this.phone, this.about, this.latitude, this.longitude, this.tag});
@@ -40,16 +43,11 @@ class Place {
     );
   }
 
-
-  /*
-  void setPosition(){
-    this.position = new Position(
-        longitude: this.longitude,
-        latitude: this.latitude
-    );
+  void setDistance() async{
+    distance = await Geolocator().
+      distanceBetween(latitude, longitude, getPosition().latitude, getPosition().longitude);
   }
 
-   */
 }
 
 List<Place> parsePlaces(String responseBody){
@@ -80,23 +78,12 @@ class PlacesList extends StatelessWidget {
     return null;
   }
 
-
-/*
-  setPosition(){
-    for(Place place in places){
-      place.setPosition();
-    }
-  }
-
- */
-
   PlacesList({Key key, this.places, this.tag}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
 
     var placeToView = (filterList() == null) ? places : filterList();
-    //setPosition();
 
     return ListView.builder(
         itemCount: placeToView.length,
@@ -158,12 +145,16 @@ class PlacesList extends StatelessWidget {
             ),
             InkResponse(
               onTap: () {
-                print("tapped");
+                print(placeToView[index].longitude);
+                /*
                 Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => PlaceCard(place: placeToView[index])
                     )
                 );
+
+                 */
+                showDialog(context: context, child: PlaceCard(place: placeToView[index]));
               }
             )
 

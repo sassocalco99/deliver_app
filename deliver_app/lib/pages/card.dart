@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import '../pages/places.dart';
 import '../style/style.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PlaceCard extends StatelessWidget{
   final Place place;
@@ -12,8 +13,8 @@ class PlaceCard extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
 
-    return Center(
-        child: Card(
+    return Card(
+          elevation: 20,
           clipBehavior: Clip.antiAlias,
           shape: RoundedRectangleBorder(),
           child: Column(
@@ -65,17 +66,22 @@ class PlaceCard extends StatelessWidget{
               ),
               Divider(),
               ListTile(
-                leading: Icon(Icons.phone),
-                title: Text(place.phone),
+                leading: Icon(Icons.phone, color: Colors.blue,),
+                title: InkWell(
+                  onTap: () => launch("tel:place.phone"),
+                  child: Text(place.phone),
+                ),
               ),
               ListTile(
-                leading: Icon(Icons.business),
-                title: Text(place.position.toString()),
-              )
+                leading: Icon(Icons.business, color: Colors.blue),
+                title: InkWell(
+                  onTap: () => launch("https://www.google.com/maps/search/?api=1&query=${place.latitude},${place.longitude}"),
+                  child: Text(place.latitude+" "+place.longitude),
+                ),
+              ),
             ],
           ),
-        )
-    );
+        );
   }
 
 }
