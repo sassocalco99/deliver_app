@@ -43,9 +43,10 @@ class Place {
     );
   }
 
-  void setDistance() async{
-    distance = await Geolocator().
-      distanceBetween(latitude, longitude, getPosition().latitude, getPosition().longitude);
+  Future<double> getDistance() async{
+   double distance = await Geolocator().
+      distanceBetween(double.parse(latitude), double.parse(longitude), getPosition().latitude, getPosition().longitude);
+    return distance;
   }
 
 }
