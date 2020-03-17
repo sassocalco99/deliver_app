@@ -12,6 +12,8 @@ import 'package:http/http.dart' as http;
 
 final String jsonLink = "https://next.json-generator.com/api/json/get/VkchDkUru?indent=4";
 
+bool isSorted = false;
+
 class Place {
   final String id;
   final int index;
@@ -49,6 +51,14 @@ class Place {
     return distance;
   }
 
+  _setDistance(){
+    getDistance().then((value){
+      distance = value;
+    }).catchError((error) {
+      print(error);
+    });
+  }
+
 }
 
 List<Place> parsePlaces(String responseBody){
@@ -79,12 +89,26 @@ class PlacesList extends StatelessWidget {
     return null;
   }
 
+  setDistance(List<Place> places){
+    for(Place place in places) place._setDistance();
+  }
+
+  List<Place> sortList(List<Place> places){
+      var sortedList = places;
+      sortedList.sort( (a,b) => a.distance.compareTo(b.distance));
+      return sortedList;
+  }
+
   PlacesList({Key key, this.places, this.tag}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
 
     var placeToView = (filterList() == null) ? places : filterList();
+
+    setDistance(placeToView);
+
+    if(isSorted) placeToView = sortList(placeToView);
 
     return ListView.builder(
         itemCount: placeToView.length,
@@ -147,14 +171,7 @@ class PlacesList extends StatelessWidget {
             InkResponse(
               onTap: () {
                 print(placeToView[index].longitude);
-                /*
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => PlaceCard(place: placeToView[index])
-                    )
-                );
 
-                 */
                 showDialog(context: context, child: PlaceCard(place: placeToView[index]));
               }
             )

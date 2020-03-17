@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../pages/places.dart';
 import 'package:http/http.dart' as http;
+import '../pages/current_position.dart';
 
 class TagPage extends StatefulWidget {
   final String tag;
@@ -18,7 +19,7 @@ class TagPage extends StatefulWidget {
 
 class _TagState extends State<TagPage>{
   List<Place> places;
-  bool value = false;
+  bool sorted = false;
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +37,11 @@ class _TagState extends State<TagPage>{
               builder: (context, snapshot){
                 if(snapshot.hasError) print(snapshot.error);
 
-                return (snapshot.hasData) ?
-                new PlacesList(places: snapshot.data, tag: this.widget.tag) :
-                Center(child: CircularProgressIndicator());
+                if(snapshot.hasData){
+                  places = snapshot.data;
+                  return new PlacesList(places: snapshot.data, tag: this.widget.tag);
+                }
+                return Center(child: CircularProgressIndicator());
               }
           )),
 
@@ -47,43 +50,40 @@ class _TagState extends State<TagPage>{
             onPressed: () {
                 showDialog(context: context,
                 child: Align(
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: SizedBox(
-                        height: 100,
-                        width: double.infinity,
-                        child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.vertical(top: Radius.circular(8))
-                            ),
-                            child: Row(
-                              children: <Widget>[
-                                Expanded(
-                                    child: FittedBox(
-                                      fit: BoxFit.fitWidth,
-                                      child: FlatButton(
-                                        child: Text("Order by distance"),
-                                      ),
-                                    )
-                                ),
-                                VerticalDivider(),
-                                SizedBox(
-                                  width: 100,
-                                  child: Switch.adaptive(
-                                    value: value,
-                                    onChanged: (bool val) {
-                                      setState(() {
-                                        value = val;
-                                      });
-                                    },
-                                  ),
-                                )
-                              ],
-                            )
-                        ),
+                  alignment: Alignment(0, 0.95),
+                  child: Material(
+                    shape: CircleBorder(),
+                    child: Container(
+                      height: 60,
+                      width: 200,
+                      padding: EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: Colors.white
                       ),
-                    )
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(50),
+                        splashColor: Colors.deepPurple,
+                        onTap: () {
+                          setState(() {
+                            sorted = !sorted;
+                            isSorted = sorted;
+                          });
+                          Navigator.of(context, rootNavigator: true).pop();
+                        },
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: (sorted) ?
+                              Text("Default sort", textScaleFactor: 1.5) :
+                              Text("Sort by distance", textScaleFactor: 1.5)
+                          )
+                        )
+                      )
+
+                    ),
+                  ),
                 )
 
                 );

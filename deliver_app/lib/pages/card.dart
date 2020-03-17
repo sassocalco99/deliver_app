@@ -63,7 +63,9 @@ class PlaceCard extends StatelessWidget{
             Divider(),
             ListTile(
               title: Text('About'),
-              subtitle: Text(place.about.substring(0, 280)+"...", textAlign: TextAlign.justify),
+              subtitle: Text(
+                  ((place.about.length <= 280) ? place.about : place.about.substring(0, 280)),
+                  textAlign: TextAlign.justify),
             ),
             Divider(),
             ListTile(
@@ -88,20 +90,9 @@ class PlaceCard extends StatelessWidget{
                 onTap: () {
 
                 },
-                child: FutureBuilder(
-                  future: place.getDistance(),
-                  builder: (context, snapshot){
-                    if(snapshot.hasError) print(snapshot.error);
-
-                    return (snapshot.hasData) ?
-                    InkWell(
-                      child: Text("${snapshot.data} m about"),
-                      onTap: () {
-                      },
-                    ) :
-                    LinearProgressIndicator();
-                  },
-                ),
+                child: (place.distance != null) ?
+                    Text("${place.distance} m") :
+                    Text("Set location first!")
               ),
             )
           ],
