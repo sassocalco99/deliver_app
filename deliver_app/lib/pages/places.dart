@@ -93,9 +93,21 @@ class PlacesList extends StatelessWidget {
     for(Place place in places) place._setDistance();
   }
 
-  List<Place> sortList(List<Place> places){
-      var sortedList = places;
-      sortedList.sort( (a,b) => a.distance.compareTo(b.distance));
+  List<Place> sortList(List<Place> places, int selection){
+
+    //selection == 1 distance
+    //selection == 2 rating
+
+      List<Place> tmp = new List<Place>.from(places);
+
+      List<Place> sortedList = new List(tmp.length);
+
+      if(selection == 2){
+        tmp.sort( (a,b) => a.rating.compareTo(b.rating));
+        for(int i = 0; i<tmp.length; i++){
+          sortedList[i] = tmp[tmp.length-i-1];
+        }
+      }
       return sortedList;
   }
 
@@ -104,11 +116,9 @@ class PlacesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    var placeToView = (filterList() == null) ? places : filterList();
+    var placeToView = (filterList() == null) ? places : sortList(filterList(), 2);
 
     setDistance(placeToView);
-
-    if(isSorted) placeToView = sortList(placeToView);
 
     return ListView.builder(
         itemCount: placeToView.length,

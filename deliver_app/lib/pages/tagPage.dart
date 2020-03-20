@@ -19,7 +19,7 @@ class TagPage extends StatefulWidget {
 
 class _TagState extends State<TagPage>{
   List<Place> places;
-  bool sorted = false;
+  int sorted = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -54,14 +54,59 @@ class _TagState extends State<TagPage>{
                   child: Material(
                     shape: CircleBorder(),
                     child: Container(
-                      height: 60,
-                      width: 200,
+                      height: 120,
+                      width: 220,
                       padding: EdgeInsets.all(2),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
                         color: Colors.white
                       ),
-                      child: InkWell(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Column(
+                          children: <Widget>[
+                            ListTile(
+                              title: Text("Sort by distance",
+                                textScaleFactor: 1.5,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: (sorted == 1) ? Colors.deepPurple : Colors.black
+                                ),
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  if(sorted != 1) {
+                                    sorted = 1;
+                                    isSorted = true;
+                                  }
+                                });
+                                Navigator.of(context, rootNavigator: true).pop();
+                              },
+                            ),
+                            ListTile(
+                              title: Text("Sort by rating",
+                                textScaleFactor: 1.5,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: (sorted == 2) ? Colors.deepPurple : Colors.black
+                                ),
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  if(sorted != 2) {
+                                    sorted = 2;
+                                    isSorted = false;
+                                  }
+                                });
+                                Navigator.of(context, rootNavigator: true).pop();
+                              },
+                            )
+                          ],
+                        )
+                      )
+
+
+                      /*InkWell(
                         borderRadius: BorderRadius.circular(50),
                         splashColor: Colors.deepPurple,
                         onTap: () {
@@ -80,7 +125,7 @@ class _TagState extends State<TagPage>{
                               Text("Sort by distance", textScaleFactor: 1.5)
                           )
                         )
-                      )
+                      ) */
 
                     ),
                   ),
